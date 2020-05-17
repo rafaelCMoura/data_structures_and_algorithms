@@ -3,6 +3,12 @@
 
 #include "sorts.h"
 
+void swap(int *array, int i, int j){
+    int aux = array[i];
+    array[i] = array[j];
+    array[j] = aux;
+}
+
 
 void merge (int *array, int left_start, int left_end, int right_end) {
     
@@ -45,8 +51,8 @@ void merge (int *array, int left_start, int left_end, int right_end) {
     free(right);
 }
 
-void merge_sort(int *array, int left_start, int right_end){
 
+void merge_sort(int *array, int left_start, int right_end) {
     if (left_start < right_end) {
         int left_end = (left_start + right_end)/2;
 
@@ -58,31 +64,36 @@ void merge_sort(int *array, int left_start, int right_end){
 
 
 void insertion_sort (int *array, int size) {
-    int i, key;
-
-    for (int j = 1; j < size; j++) {
-        key = array[j];
-        i = j - 1;
-
-        while (i >= 0 && array[i] > key) {
-            array[i + 1] = array[i];
-            i = i - 1;
+    for (int i = 1; i < size; i++) {
+        for (int j = i - 1; j >= 0; j--) {
+            if(array[j] > array[j + 1]) {
+                swap(array, j, j + 1);
+            }
         }
-        array[i + 1] = key;
     }
 }
 
 
 void bubble_sort (int *array, int size) {
-    int aux;
-
     for (int i = 1; i < size; i++) {
         for (int j = 0; j < size - 1; j++) {
             if (array[j] > array[j + 1]) {
-                aux = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = aux;
+                swap(array, j, j + 1);
             }
         }
     }
 }
+
+
+void selection_sort(int *array, int size){
+    int min_index = 0;
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = i + 1; j < size; j++) {
+            if (array[j] < array[min_index]) {
+                min_index = j;
+            }
+        }
+        swap(array, i, min_index);
+    }
+}
+
