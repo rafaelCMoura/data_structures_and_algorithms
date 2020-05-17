@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "sorts.h"
+#include "utils.h"
 
 void swap(int *array, int i, int j){
     int aux = array[i];
@@ -84,8 +85,9 @@ void bubble_sort (int *array, int size) {
 
 
 void selection_sort(int *array, int size){
-    int min_index = 0;
+    int min_index;
     for (int i = 0; i < size - 1; i++) {
+        min_index = i;
         for (int j = i + 1; j < size; j++) {
             if (array[j] < array[min_index]) {
                 min_index = j;
