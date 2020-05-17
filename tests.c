@@ -1,57 +1,108 @@
 #include <stdio.h>
+#include <stdlib.h> 
+#include <time.h> 
+
 #include "src/sorts.h"
 #include "src/unit_tests.h"
+#include "src/utils.h"
+
+int comparation_function (const void * a, const void * b) {
+   return ( *(int*)a - *(int*)b );
+}
+
+void mock_sort_random_array(int *unsorted, int *sorted, int size, int min, int max ){
+    srand(time(0));
+    
+    for (int i = 0; i < size; i++) {
+        unsorted[i] = (rand() % (max - min + 1)) + min;
+        sorted[i] = unsorted[i];
+    }
+
+    qsort(sorted, size, sizeof(int), comparation_function);
+}
 
 void test_bubble_sort(){
-    int array [5] = {3, 4, 2, 5, 1}; 
-    int expected_output [5] = {1, 2, 3, 4, 5};
+    int size = 10;
+    int min_value = 1;
+    int max_value = 10;
 
-    int *array_pointer = array;
-    int *expected_output_pointer = expected_output;
+    int *input;
+    int *output;
 
-    bubble_sort(array_pointer, 5);
+    input = malloc(size*sizeof(int));
+    output = malloc(size*sizeof(int));
+
+    mock_sort_random_array(input, output, size, min_value, max_value);
 
     printf("\nBubble Sort\t");
-    assert_array(array_pointer, expected_output_pointer, 5);
+    bubble_sort(input, size);
+    assert_array(input, output, size);
+
+    free(input);
+    free(output);
 }
 
 void test_insertion_sort(){
-    int array [5] = {3, 4, 2, 5, 1}; 
-    int expected_output [5] = {1, 2, 3, 4, 5};
+    int size = 10;
+    int min_value = 1;
+    int max_value = 10;
 
-    int *array_pointer = array;
-    int *expected_output_pointer = expected_output;
+    int *input;
+    int *output;
 
-    insertion_sort(array_pointer, 5);
+    input = malloc(size*sizeof(int));
+    output = malloc(size*sizeof(int));
+
+    mock_sort_random_array(input, output, size, min_value, max_value);
 
     printf("\nInsertion Sort\t");
-    assert_array(array_pointer, expected_output_pointer, 5);
+    insertion_sort(input, size);
+    assert_array(input, output, size);
+
+    free(input);
+    free(output);
 }
 
 void test_merge_sort(){
-    int array [5] = {3, 4, 2, 5, 1}; 
-    int expected_output [5] = {1, 2, 3, 4, 5};
+    int size = 10;
+    int min_value = 1;
+    int max_value = 10;
 
-    int *array_pointer = array;
-    int *expected_output_pointer = expected_output;
+    int *input;
+    int *output;
 
-    merge_sort(array_pointer, 0, 4);
+    input = malloc(size*sizeof(int));
+    output = malloc(size*sizeof(int));
+
+    mock_sort_random_array(input, output, size, min_value, max_value);
 
     printf("\nMerge Sort\t");
-    assert_array(array_pointer, expected_output_pointer, 5);
+    merge_sort(input, 0, size-1);
+    assert_array(input, output, size);
+
+    free(input);
+    free(output);
 }
 
 void test_selection_sort(){
-    int array [5] = {3, 4, 2, 5, 1}; 
-    int expected_output [5] = {1, 2, 3, 4, 5};
+    int size = 10;
+    int min_value = 1;
+    int max_value = 10;
 
-    int *array_pointer = array;
-    int *expected_output_pointer = expected_output;
+    int *input;
+    int *output;
 
-    selection_sort(array_pointer, 5);
+    input = malloc(size*sizeof(int));
+    output = malloc(size*sizeof(int));
+
+    mock_sort_random_array(input, output, size, min_value, max_value);
 
     printf("\nSelection Sort\t");
-    assert_array(array_pointer, expected_output_pointer, 5);
+    selection_sort(input, size);
+    assert_array(input, output, size);
+
+    free(input);
+    free(output);
 }
 
 int main(void) {
