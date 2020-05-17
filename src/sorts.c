@@ -11,9 +11,7 @@ void swap(int *array, int i, int j){
 
 
 void merge (int *array, int left_start, int left_end, int right_end) {
-    
-    const int right_start = left_end + 1;            // Just to improve understanding of the algorithm
-
+    const int right_start = left_end + 1;
     const int left_size = left_end - left_start + 1;
     const int right_size = right_end - right_start + 1;
 
