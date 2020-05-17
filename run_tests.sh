@@ -18,7 +18,7 @@ echo "Running ..."
 echo
 
 {
-    ./tests_bin.exe
+    ./tests_bin
     echo
     echo -e "[\033[0;34mdone!\033[0m]" 
 } || {
