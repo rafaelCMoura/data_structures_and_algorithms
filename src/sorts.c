@@ -5,32 +5,33 @@
 
 
 void merge (int *array, int left_start, int left_end, int right_end) {
+    
+    const int right_start = left_end + 1;            // Just to improve understanding of the algorithm
+
     const int left_size = left_end - left_start + 1;
-    const int right_size = right_end - left_end;
+    const int right_size = right_end - right_start + 1;
 
     int *left;
     int *right;
 
-    left = malloc(left_size*sizeof(int));
-    right = malloc(right_size*sizeof(int));
+    left = malloc((left_size + 1)*sizeof(int));
+    right = malloc((right_size + 1)*sizeof(int));
     
-    // Alocar memoria e criar vetor left
     for (int i = 0; i < left_size; i++) {
-        left[i] = array[left_start + i - 1];
+        left[i] = array[left_start + i];
     }
     
-    // Alocar memoria e criar vetor right
     for (int j = 0; j < right_size; j++) {
-        left[j] = array[left_end + j];
+        right[j] = array[right_start + j];
     }
     
-    left[left_end] = INFINITY;
-    right[right_end] = INFINITY;
+    left[left_size] = (int) INFINITY;
+    right[right_size] = (int) INFINITY;
 
     int i = 0;
     int j = 0;
 
-    for (int k = left_start; k < right_end; k++) {
+    for (int k = left_start; k <= right_end; k++) {
         if (left[i] <= right[j]) {
             array[k] = left[i];
             i = i + 1;
@@ -85,4 +86,3 @@ void bubble_sort (int *array, int size) {
         }
     }
 }
-

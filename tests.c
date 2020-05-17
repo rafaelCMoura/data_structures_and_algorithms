@@ -28,7 +28,6 @@ void test_insertion_sort(){
     assert_array(array_pointer, expected_output_pointer, 5);
 }
 
-
 void test_merge_sort(){
     int array [5] = {3, 4, 2, 5, 1}; 
     int expected_output [5] = {1, 2, 3, 4, 5};
