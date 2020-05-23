@@ -1,18 +1,50 @@
-#include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
 #include "sorts.h"
 #include "utils.h"
 
-void swap(int *array, int i, int j){
+void swap (int *array, int i, int j) {
     int aux = array[i];
     array[i] = array[j];
     array[j] = aux;
 }
 
+void bubble_sort (int *array, int size) {
+    for (int i = 1; i < size; i++) {
+        for (int j = 0; j < size - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                swap(array, j, j + 1);
+            }
+        }
+    }
+}
+
+void insertion_sort (int *array, int size) {
+    for (int i = 1; i < size; i++) {
+        for (int j = i - 1; j >= 0; j--) {
+            if(array[j] > array[j + 1]) {
+                swap(array, j, j + 1);
+            }
+        }
+    }
+}
+
+
+void selection_sort (int *array, int size) {
+    int min_index;
+    for (int i = 0; i < size - 1; i++) {
+        min_index = i;
+        for (int j = i + 1; j < size; j++) {
+            if (array[j] < array[min_index]) {
+                min_index = j;
+            }
+        }
+        swap(array, i, min_index);
+    }
+}
 
 #define INF 1000000000
+
 void merge (int *array, int left_start, int left_end, int right_end) {
     const int right_start = left_end + 1;
     const int left_size = left_end - left_start + 1;
@@ -53,7 +85,7 @@ void merge (int *array, int left_start, int left_end, int right_end) {
 }
 
 
-void merge_sort(int *array, int left_start, int right_end) {
+void merge_sort (int *array, int left_start, int right_end) {
     if (left_start < right_end) {
         int left_end = (left_start + right_end)/2;
 
@@ -64,38 +96,4 @@ void merge_sort(int *array, int left_start, int right_end) {
 }
 
 
-void insertion_sort (int *array, int size) {
-    for (int i = 1; i < size; i++) {
-        for (int j = i - 1; j >= 0; j--) {
-            if(array[j] > array[j + 1]) {
-                swap(array, j, j + 1);
-            }
-        }
-    }
-}
-
-
-void bubble_sort (int *array, int size) {
-    for (int i = 1; i < size; i++) {
-        for (int j = 0; j < size - 1; j++) {
-            if (array[j] > array[j + 1]) {
-                swap(array, j, j + 1);
-            }
-        }
-    }
-}
-
-
-void selection_sort(int *array, int size){
-    int min_index;
-    for (int i = 0; i < size - 1; i++) {
-        min_index = i;
-        for (int j = i + 1; j < size; j++) {
-            if (array[j] < array[min_index]) {
-                min_index = j;
-            }
-        }
-        swap(array, i, min_index);
-    }
-}
 
