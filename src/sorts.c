@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
@@ -11,6 +12,7 @@ void swap(int *array, int i, int j){
 }
 
 
+#define INF 1000000000
 void merge (int *array, int left_start, int left_end, int right_end) {
     const int right_start = left_end + 1;
     const int left_size = left_end - left_start + 1;
@@ -30,8 +32,8 @@ void merge (int *array, int left_start, int left_end, int right_end) {
         right[j] = array[right_start + j];
     }
     
-    left[left_size] = (int) INFINITY;
-    right[right_size] = (int) INFINITY;
+    left[left_size] = INF;
+    right[right_size] = INF;
 
     int i = 0;
     int j = 0;
