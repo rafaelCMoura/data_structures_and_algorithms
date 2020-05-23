@@ -43,7 +43,10 @@ void selection_sort (int *array, int size) {
     }
 }
 
-#define INF 1000000000
+void shell_sort() (int *array, int size) {
+    
+}
+
 
 void merge (int *array, int left_start, int left_end, int right_end) {
     const int right_start = left_end + 1;
@@ -64,6 +67,8 @@ void merge (int *array, int left_start, int left_end, int right_end) {
         right[j] = array[right_start + j];
     }
     
+    const int INF = 1000000000;
+
     left[left_size] = INF;
     right[right_size] = INF;
 
