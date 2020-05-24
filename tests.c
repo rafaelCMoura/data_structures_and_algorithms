@@ -64,6 +64,26 @@ void test_insertion_sort(){
     free(output);
 }
 
+void test_shell_sort(){
+    int size = 100;
+    int min_value = 1;
+    int max_value = 10;
+
+    int *input;
+    int *output;
+
+    input = malloc(size*sizeof(int));
+    output = malloc(size*sizeof(int));
+
+    mock_sort_random_array(input, output, size, min_value, max_value);
+    printf("\nShell Sort\t");
+    shell_sort(input, size, 1);
+    assert_array(input, output, size);
+
+    free(input);
+    free(output);
+}
+
 void test_merge_sort(){
     int size = 10;
     int min_value = 1;
@@ -113,6 +133,7 @@ int main(void) {
     test_insertion_sort();
     test_merge_sort();
     test_selection_sort();
+    test_shell_sort();
     printf("\n");
 
     return 0;

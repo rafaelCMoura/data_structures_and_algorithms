@@ -1,5 +1,5 @@
 #include <stdlib.h>
-
+#include <stdio.h>
 #include "sorts.h"
 #include "utils.h"
 
@@ -7,26 +7,6 @@ void swap (int *array, int i, int j) {
     int aux = array[i];
     array[i] = array[j];
     array[j] = aux;
-}
-
-void bubble_sort (int *array, int size) {
-    for (int i = 1; i < size; i++) {
-        for (int j = 0; j < size - 1; j++) {
-            if (array[j] > array[j + 1]) {
-                swap(array, j, j + 1);
-            }
-        }
-    }
-}
-
-void insertion_sort (int *array, int size) {
-    for (int i = 1; i < size; i++) {
-        for (int j = i - 1; j >= 0; j--) {
-            if(array[j] > array[j + 1]) {
-                swap(array, j, j + 1);
-            }
-        }
-    }
 }
 
 
@@ -43,8 +23,127 @@ void selection_sort (int *array, int size) {
     }
 }
 
-void shell_sort() (int *array, int size) {
+
+void bubble_sort (int *array, int size) {
+    for (int i = 1; i < size; i++) {
+        for (int j = 0; j < size - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                swap(array, j, j + 1);
+            }
+        }
+    }
+}
+
+
+void insertion_sort (int *array, int size) {
+    for (int i = 1; i < size; i++) {
+        for (int j = i - 1; j >= 0; j--) {
+            if(array[j] > array[j + 1]) {
+                swap(array, j, j + 1);
+            }
+        }
+    }
+}
+
+
+void increment_insertion_sort(int *array, int size, int increment) {
+    for (int i = increment; i < size; i++) {
+        for (int j = i - increment; j >= 0; j--) {
+            if(array[j] > array[j + increment]) {
+                swap(array, j, j + increment);
+            }
+        }
+    }
+}
+
+// The Art of Computer Programing Vol 3 page 95
+int knuth_increment(int s) {
+    int h;
+    if (s > 1) {
+        h = 3*knuth_increment(s - 1) + 1;
+    } else {
+        h = 1;
+    }
+    return h;
+}
+
+// The Art of Computer Programing Vol 3 page 93
+int sedgewick_increment(int s) {
+    int h;
+    if(s % 2 == 0) {
+        h = 9*(2^s - 2^(s/2)) + 1;
+    } else {
+        h = 8*(2^s - 2^((s+1)/2)) + 1;
+    }
+    return h;
+}
+
+// Original Donald L. Shell's suggestion. The Art of Computer Programing Vol 3 page 93
+int shell_increment(int s) {
+    int h;
+    if(s / 2 > 1) {
+        h = s / 2;
+    } else {
+        h = 1;
+    }
+    return h;
+}
+
+int get_increment_sequence_size(int size, int type) {
+
+    int sequence_size = 0;
+    int increment = size;
+
+    while (increment > 1) {
+        if (type == 1){
+            increment = shell_increment(increment);
+        } else if ( type == 2) {
+            increment = knuth_increment(increment);
+        } else if ( type == 3) {
+            increment = sedgewick_increment(increment);
+        }
+
+        sequence_size = sequence_size + 1;
+    }
+
+    return sequence_size;
+}
+
+void create_increment_sequence(int size, int type, int *sequence) {
+
+    int increment = size;
+    int i = 0;
+
+    while (increment > 1) {
+        if (type == 1){
+            increment = shell_increment(increment);
+        } else if ( type == 2) {
+            increment = knuth_increment(increment);
+        } else {
+            increment = sedgewick_increment(increment);
+        }
+
+        sequence[i] = increment;
+        i = i + 1;
+    }
+}
+
+void shell_sort(int *array, int size, int type) {
     
+    int increment_sequence_size = get_increment_sequence_size(size, type);
+    
+    int *increment_sequence;
+    increment_sequence = malloc(increment_sequence_size*sizeof(int));
+
+    create_increment_sequence(size, type, increment_sequence);
+
+    //print(increment_sequence, increment_sequence_size);
+
+    for (int i = (increment_sequence_size-1); i >=0; i--) {
+        increment_insertion_sort(array, size, increment_sequence[i]);
+    }
+
+    free(increment_sequence);
 }
 
 
@@ -99,6 +198,3 @@ void merge_sort (int *array, int left_start, int right_end) {
         merge(array, left_start, left_end, right_end);
     }
 }
-
-
-
